@@ -23,4 +23,9 @@ class News  extends ActiveRecord
             [['name','date','theme'], 'required'],
         ];
     }
+
+    public function getTheme()
+    {
+        return $this->hasOne(Themes::className(), ['id' => 'theme_id']);
+    }
 }

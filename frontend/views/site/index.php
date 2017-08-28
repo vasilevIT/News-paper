@@ -12,7 +12,7 @@ $this->title = 'Главная';
     <?php foreach ($news as $new): ?>
         <li>
             <?= Html::encode("{$new->name} ({$new->date})") ?><br>
-            Тема: <?= Html::encode("{$new->theme}") ?><br>
+            Тема: <?= Html::encode("{$new->theme->name}") ?><br>
             Статья: <?= substr($new->text,0,256) ?><?=strlen($new->text)>256?'...':''?>
             <?= Html::a('читать далее',Url::toRoute([ 'view', 'id' => $new->id]))?>
         </li>

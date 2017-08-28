@@ -3,12 +3,14 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\components\ThemeWidget;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use app\components\DateWidget;
 
 AppAsset::register($this);
 ?>
@@ -37,11 +39,13 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index']],
+        ['label' => 'Темы', 'url' => ['/theme/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Админка', 'url' => ['/site/login']];
     } else {
         $menuItems[] = ['label' => 'Новая новость', 'url' => ['/site/new']];
+        $menuItems[] = ['label' => 'Новая тема', 'url' => ['/theme/new']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -61,7 +65,9 @@ AppAsset::register($this);
     ?>
     <div class="container">
         <div class="left_menu">
-        <?= Yii::$app->view->render('@app/views/site/menu.php')?>
+
+            <?=DateWidget::widget()?>
+            <?=ThemeWidget::widget()?>
         </div>
         <div class="content">
         <?= Breadcrumbs::widget([

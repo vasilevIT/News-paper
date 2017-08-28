@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\News;
+use frontend\models\Themes;
 use yii\data\Pagination;
 
 /**
@@ -26,7 +27,8 @@ class SiteController extends Controller
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+
+                        'actions' => ['new'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -78,8 +80,7 @@ class SiteController extends Controller
             }
         }
         elseif(isset($_GET['theme'])){
-            $find_theme = News::find()->where(['id' => (integer)$_GET['theme']])->one();
-            $query = News::find()->where(['theme' => addslashes($find_theme->theme)]);
+            $query = News::find()->where(['theme_id' => (integer)$_GET['theme']]);
         }
         else {
             $query = News::find();
@@ -157,11 +158,11 @@ class SiteController extends Controller
 
                 $name = Yii::$app->request->post()['News']['name'];
                 $date = Yii::$app->request->post()['News']['date'];
-                $theme = Yii::$app->request->post()['News']['theme'];
+                $theme_id = Yii::$app->request->post()['News']['theme_id'];
                 $text = Yii::$app->request->post()['News']['text'];
                 $model->name = $name;
                 $model->date = $date;
-                $model->theme = $theme;
+                $model->theme_id = $theme_id;
                 $model->text = $text;
                 $model->update();
                 return $this->redirect(['view','id'=>$model->id]);
@@ -184,13 +185,14 @@ class SiteController extends Controller
     {
         $model = new News();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
             $name = Yii::$app->request->post()['News']['name'];
             $date = Yii::$app->request->post()['News']['date'];
-            $theme = Yii::$app->request->post()['News']['theme'];
+            $theme_id = Yii::$app->request->post()['News']['theme_id'];
             $text = Yii::$app->request->post()['News']['text'];
             $model->name = $name;
             $model->date = $date;
-            $model->theme = $theme;
+            $model->theme_id = $theme_id;
             $model->text = $text;
             $model->insert();
             return $this->redirect(['view','id'=>$model->id]);

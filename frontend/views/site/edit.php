@@ -4,8 +4,10 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\News */
 
+use frontend\models\Themes;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 $this->title = 'News';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,7 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'date')->label('Дата') ?>
 
-                <?= $form->field($model, 'theme')->label('Тема') ?>
+                <?= $form->field($model, 'theme_id')->dropDownList(
+                    ArrayHelper::map(Themes::find()->all(),'id','name'),
+            ['prompt'=>'Выберите тему']
+       )->label('Тема')?>
 
                 <?= $form->field($model, 'text')->textarea(['rows' => 6])->label('Тест');?>
 
