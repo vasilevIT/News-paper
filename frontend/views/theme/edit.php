@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $form = ActiveForm::begin(['id' => 'theme-form']); ?>
 
-<?= $form->field($model, 'name')->textInput(['autofocus' => true])->label('Название') ?>
+<?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
 
 <div class="form-group">
     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

@@ -55,14 +55,10 @@ class ThemeController extends Controller
         }
     }
 
-    public function actionEdit(){
-        if (isset($_GET['id'])){
-            $id = (integer)$_GET['id'];
+    public function actionEdit($id){
+        if ($id){
             $model = Themes::find()->where(['id' => $id])->one();
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                $name = Yii::$app->request->post()['Themes']['name'];
-                $model->name = $name;
-                $model->update();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }else {
                 $model = Themes::find()->where(['id' => (integer)$_GET['id']])->one();
@@ -73,10 +69,7 @@ class ThemeController extends Controller
 
     public function actionNew(){
         $model = new Themes;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $name = Yii::$app->request->post()['Themes']['name'];
-            $model->name = $name;
-            $model->insert();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }else {
             return $this->render('new', ['model' => $model]);

@@ -20,7 +20,8 @@ class News  extends ActiveRecord
     public function rules()
     {
         return [
-            [['name','date','theme'], 'required'],
+            [['name','date','theme_id'], 'required'],
+            ['text', 'string','max'=>500],
         ];
     }
 
@@ -28,4 +29,15 @@ class News  extends ActiveRecord
     {
         return $this->hasOne(Themes::className(), ['id' => 'theme_id']);
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Название',
+            'theme' => 'Тема',
+            'date' => 'Дата',
+            'text' => 'Статья',
+        ];
+    }
+
 }

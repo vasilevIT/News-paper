@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use frontend\models\SignupForm;
 use Yii;
+use yii\base\ErrorException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -10,6 +11,7 @@ use common\models\LoginForm;
 use frontend\models\News;
 use frontend\models\Themes;
 use yii\data\Pagination;
+use yii\web\ErrorAction;
 
 /**
  * Site controller
@@ -149,22 +151,11 @@ class SiteController extends Controller
         }
     }
 
-    public function actionEdit()
+    public function actionEdit($id)
     {
-        if (isset($_GET['id'])){
-            $id = (integer)Yii::$app->request->get()['id'];
+        if (isset($id) && is_integer($id)){
             $model = News::find()->where(['id' => $id])->one();
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-                $name = Yii::$app->request->post()['News']['name'];
-                $date = Yii::$app->request->post()['News']['date'];
-                $theme_id = Yii::$app->request->post()['News']['theme_id'];
-                $text = Yii::$app->request->post()['News']['text'];
-                $model->name = $name;
-                $model->date = $date;
-                $model->theme_id = $theme_id;
-                $model->text = $text;
-                $model->update();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view','id'=>$model->id]);
             } else {
                 return $this->render('edit', [
@@ -173,28 +164,14 @@ class SiteController extends Controller
             }
         }
         else{
-            $name = "Ошибка";
-            $message = "Не указан ID новости!";
-            return $this->render('error',[
-                'name' => $name,
-                'message' => $message]);
+            throw new ErrorException('Не указан ID');
         }
     }
 
     public function actionNew()
     {
         $model = new News();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
-            $name = Yii::$app->request->post()['News']['name'];
-            $date = Yii::$app->request->post()['News']['date'];
-            $theme_id = Yii::$app->request->post()['News']['theme_id'];
-            $text = Yii::$app->request->post()['News']['text'];
-            $model->name = $name;
-            $model->date = $date;
-            $model->theme_id = $theme_id;
-            $model->text = $text;
-            $model->insert();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view','id'=>$model->id]);
         } else {
             $model->date = date("Y-m-d");

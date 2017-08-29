@@ -18,8 +18,23 @@ class Themes extends ActiveRecord
         return 'themes';
     }
 
+    public function rules()
+    {
+        return [
+            ['name','required']
+        ];
+    }
+
     public function getNews_count()
     {
         return News::find()->where(['theme_id' => $this->id])->count();
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Название'
+        ];
+    }
+
 }
