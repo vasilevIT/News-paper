@@ -1,5 +1,6 @@
 <?php
 
+use frontend\models\News;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
@@ -9,15 +10,28 @@ $this->title = 'Главная';
 ?>
 <h1>News</h1>
 
-<ul>
-    <?php foreach ($news as $new): ?>
-        <li>
-            <?= Html::encode("{$new->name} ({$new->date})") ?><br>
-            Тема: <?= Html::encode("{$new->theme->name}") ?><br>
-            Статья: <?= substr($new->text,0,256) ?><?=strlen($new->text)>256?'...':''?>
-            <?= Html::a('читать далее',Url::toRoute([ 'view', 'id' => $new->id]))?>
-        </li>
-    <?php endforeach; ?>
-</ul>
+<?=\yii\grid\GridView::widget([
+    'dataProvider' => new \yii\data\ArrayDataProvider([
+       'allModels' => $news
+    ]),
+    'columns' => [
+        'id',
+        'date',
+        'name',
+        [
+            'label' => 'Тема',
+            'value' => function(News $model){
+                return $model->getTheme()->name;
+            }
+        ],
+        'text',
+        [
+            'format' => 'raw',
+            'value' => function(News $model){
+            return Html::a('читать далее',Url::toRoute([ 'view', 'id' => $model->id]));
+            }
+        ]
+    ]
+])?>
 
 <?= LinkPager::widget(['pagination' => $pagination]) ?>
