@@ -9,7 +9,7 @@
 namespace app\components;
 
 
-use frontend\models\Themes;
+use frontend\models\Theme;
 use yii\base\Widget;
 use yii\helpers\Url;
 use yii\widgets\Menu;
@@ -23,7 +23,7 @@ class ThemeWidget extends Widget
         parent::init();
         if ($this->message == null){
             $items = array();
-            $rows = Themes::find()->all();
+            $rows = Theme::find()->all();
             foreach ($rows as $row){
                 $items[] = ['label' => $row->name . " ({$row->news_count})"
                     ,'url' => Url::to(['site/index','theme'=>$row->id])];

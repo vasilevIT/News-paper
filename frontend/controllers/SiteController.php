@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\News;
-use frontend\models\Themes;
+use frontend\models\Theme;
 use yii\data\Pagination;
 use yii\web\ErrorAction;
 
@@ -44,19 +44,15 @@ class SiteController extends BehaviorsController
      */
     public function actionIndex()
     {
+        $query = News::find();
         if (isset($_GET['year'])){
-            if (isset($_GET['month'])){
-                $query = News::find()->where(['year(date)' => (integer)$_GET['year'],'month(date)' => (integer)$_GET['month']]);
-            }
-            else {
-                $query = News::find()->where(['year(date)' => (integer)$_GET['year']]);
-            }
+            $query->andWhere(['year(date)' => (integer)$_GET['year']]);
         }
-        elseif(isset($_GET['theme'])){
-            $query = News::find()->where(['theme_id' => (integer)$_GET['theme']]);
+        if (isset($_GET['month'])){
+            $query->andWhere(['month(date)' => (integer)$_GET['month']]);
         }
-        else {
-            $query = News::find();
+        if(isset($_GET['theme'])){
+            $query->andWhere(['theme_id' => (integer)$_GET['theme']]);
         }
 
         $pagination = new Pagination([

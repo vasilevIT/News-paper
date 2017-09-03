@@ -4,7 +4,7 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\News */
 
-use frontend\models\Themes;
+use frontend\models\Theme;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $form->field($model, 'date') ?>
 
-<?= $form->field($model, 'theme_id')->dropDownList(ArrayHelper::map(Themes::find()->all(),'id','name'),
+<?= $form->field($model, 'theme_id')->dropDownList(ArrayHelper::map(Theme::find()->all(),'id','name'),
     ['prompt'=>'Выберите тему']) ?>
 
 <?= $form->field($model, 'text')->textarea(['rows' => 6]);?>

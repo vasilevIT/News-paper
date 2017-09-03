@@ -9,6 +9,7 @@
 namespace common\controllers;
 
 
+use Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 
@@ -26,23 +27,21 @@ class BehaviorsController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+              /*  'denyCallback' => function($rule, $action){
+                    throw new Exception('lox');
+                },*/
+                'only' => ['new', 'update', 'logout'],
                 'rules' => [
                     [
-                        'allow' => true,
-                        'controllers' => ['site'],
-                        'actions' => ['index', 'error'],
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        'controllers' => ['site'],
-                        'actions' => ['login', 'error'],
+                        'allow' => false,
+                        'controllers' => ['site', 'theme'],
+                        'actions' => ['new', 'update', 'logout'],
                         'roles' => ['?'],
                     ],
                     [
                         'allow' => true,
-                        'controllers' => ['theme'],
-                        'actions' => ['index', 'error'],
+                        'controllers' => ['site', 'theme'],
+                        'actions' => ['new', 'update', 'logout'],
                         'roles' => ['@'],
                     ],
                 ],

@@ -27,7 +27,7 @@ class News  extends ActiveRecord
 
     public function getTheme()
     {
-        return $this->hasOne(Themes::className(), ['id' => 'theme_id']);
+        return $this->hasOne(Theme::className(), ['id' => 'theme_id']);
     }
 
     public function attributeLabels()

@@ -10,7 +10,7 @@ namespace frontend\controllers;
 
 
 use common\controllers\BehaviorsController;
-use frontend\models\Themes;
+use frontend\models\Theme;
 use Yii;
 use yii\data\Pagination;
 
@@ -34,7 +34,7 @@ class ThemeController extends BehaviorsController
     }
 
     public function actionIndex(){
-        $query = Themes::find();
+        $query = Theme::find();
         $pagination = new Pagination([
             'defaultPageSize' => 5,
             'totalCount' => $query->count(),
@@ -50,25 +50,25 @@ class ThemeController extends BehaviorsController
 
     public function actionView(){
         if (isset($_GET['id'])){
-            $model = Themes::find()->where(['id'=>(integer)$_GET['id']])->one();
+            $model = Theme::find()->where(['id'=>(integer)$_GET['id']])->one();
             return $this->render('view',['model'=>$model]);
         }
     }
 
     public function actionEdit($id){
         if ($id){
-            $model = Themes::find()->where(['id' => $id])->one();
+            $model = Theme::find()->where(['id' => $id])->one();
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }else {
-                $model = Themes::find()->where(['id' => (integer)$_GET['id']])->one();
+                $model = Theme::find()->where(['id' => (integer)$_GET['id']])->one();
                 return $this->render('edit', ['model' => $model]);
             }
         }
     }
 
     public function actionNew(){
-        $model = new Themes;
+        $model = new Theme;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }else {

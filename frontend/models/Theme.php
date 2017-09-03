@@ -11,11 +11,11 @@ namespace frontend\models;
 
 use yii\db\ActiveRecord;
 
-class Themes extends ActiveRecord
+class Theme extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'themes';
+        return 'theme';
     }
 
     public function rules()

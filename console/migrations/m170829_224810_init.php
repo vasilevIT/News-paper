@@ -20,7 +20,8 @@ class m170829_224810_init extends Migration
                 'id' => Schema::TYPE_PK,
                 'name' => Schema::TYPE_STRING,
             ]);
-        $this->addForeignKey('news_to_themes','theme_id','news','id','themes');
+        $this->addForeignKey('news_to_themes', 'news', 'theme_id','theme','id');
+
     }
 
     public function safeDown()
