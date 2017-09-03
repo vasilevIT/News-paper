@@ -34,7 +34,7 @@ class News  extends ActiveRecord
     {
         return [
             'name' => 'Название',
-            'theme' => 'Тема',
+            'theme_id' => 'Тема',
             'date' => 'Дата',
             'text' => 'Статья',
         ];

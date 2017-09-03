@@ -9,12 +9,12 @@
 namespace frontend\controllers;
 
 
+use common\controllers\BehaviorsController;
 use frontend\models\Themes;
 use Yii;
 use yii\data\Pagination;
-use yii\web\Controller;
 
-class ThemeController extends Controller
+class ThemeController extends BehaviorsController
 {
 
     /**

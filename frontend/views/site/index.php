@@ -8,6 +8,7 @@ use yii\widgets\LinkPager;
 $this->title = 'Главная';
 ?>
 <h1>News</h1>
+
 <ul>
     <?php foreach ($news as $new): ?>
         <li>

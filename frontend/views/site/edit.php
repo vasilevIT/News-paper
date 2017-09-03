@@ -16,21 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                <?= $form->field($model, 'name')->textInput(['autofocus' => true])->label('Название') ?>
+                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
 
-                <?= $form->field($model, 'date')->label('Дата') ?>
+                <?= $form->field($model, 'date') ?>
 
                 <?= $form->field($model, 'theme_id')->dropDownList(
                     ArrayHelper::map(Themes::find()->all(),'id','name'),
             ['prompt'=>'Выберите тему']
-       )->label('Тема')?>
+       )?>
 
-                <?= $form->field($model, 'text')->textarea(['rows' => 6])->label('Тест');?>
+                <?= $form->field($model, 'text')->textarea(['rows' => 6])?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
 
-<!--<input type="text" id="news-date">-->
 

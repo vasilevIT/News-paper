@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\controllers\BehaviorsController;
 use frontend\models\SignupForm;
 use Yii;
 use yii\base\ErrorException;
@@ -14,41 +15,11 @@ use yii\data\Pagination;
 use yii\web\ErrorAction;
 
 /**
- * Site controller
+ * Class SiteController
+ * @package frontend\controllers
  */
-class SiteController extends Controller
+class SiteController extends BehaviorsController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-
-                        'actions' => ['new'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['new'],
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * @inheritdoc
@@ -153,6 +124,7 @@ class SiteController extends Controller
 
     public function actionEdit($id)
     {
+        echo is($id);
         if (isset($id) && is_integer($id)){
             $model = News::find()->where(['id' => $id])->one();
             if ($model->load(Yii::$app->request->post()) && $model->save()) {

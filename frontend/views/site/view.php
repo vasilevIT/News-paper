@@ -4,14 +4,14 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\DetailView;
 
 $this->title = 'Новость';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <h1>Просмотр новости</h1>
-    <h3>Название новости: <?=$model->name?></h3>
-    <p>Дата публикации: <?=$model->date?></p>
-    <p>Тема: <?=$model->theme->name?></p>
-    <p>Текст: <?=$model->text?></p>
-    <br>
+<?=DetailView::widget([
+    'model' => $model,
+])?>
+
     <?=Html::a('редактировать',Url::toRoute([ 'edit', 'id' => $model->id])) ?>

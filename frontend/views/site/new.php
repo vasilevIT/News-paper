@@ -4,6 +4,8 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \frontend\models\News */
 
+use frontend\models\Themes;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
@@ -15,13 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php $form = ActiveForm::begin(['id' => 'add-form']); ?>
 
-<?= $form->field($model, 'name')->textInput(['autofocus' => true])->label('Название') ?>
+<?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
 
-<?= $form->field($model, 'date')->label('Дата') ?>
+<?= $form->field($model, 'date') ?>
 
-<?= $form->field($model, 'theme')->label('Тема') ?>
+<?= $form->field($model, 'theme_id')->dropDownList(ArrayHelper::map(Themes::find()->all(),'id','name'),
+    ['prompt'=>'Выберите тему']) ?>
 
-<?= $form->field($model, 'text')->textarea(['rows' => 6])->label('Тест');?>
+<?= $form->field($model, 'text')->textarea(['rows' => 6]);?>
 
     <div class="form-group">
         <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary', 'name' => 'news-button']) ?>
