@@ -25,14 +25,17 @@ class ThemeWidget extends Widget
             $items = array();
             $rows = Theme::find()->all();
             foreach ($rows as $row){
-                $items[] = ['label' => $row->name . " ({$row->news_count})"
+                $items[] = [
+
+                    'options' => ['class' => 'list-group-item list-group-item-action'],
+                        'label' => $row->name . " ({$row->news_count})"
                     ,'url' => Url::to(['site/index','theme'=>$row->id])];
             }
             echo "<br><h3>Темы:</h3>";
             echo Menu::widget([
-                'options' => ['class' => 'sidebar-menu treeview'],
+                'options' => ['class' => 'list-group'],
                 'items' => $items,
-                'submenuTemplate' => "\n<ul class='treeview-menu'>\n{items}\n</ul>\n",
+                'submenuTemplate' => "\n<ul class='list-group'>\n{items}\n</ul>\n",
                 'encodeLabels' => false, //allows you to use html in labels
                 'activateParents' => true,   ]);
 

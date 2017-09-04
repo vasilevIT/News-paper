@@ -4,21 +4,22 @@ use frontend\models\News;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
-/* @var $this yii\web\View */
+/* @var $this yii\web\View
+ * @var $newsDataProvider yii\data\ActiveDataProvider from frontend\controllers\SiteController
+ */
 
 $this->title = 'Главная';
 ?>
 <h1>News</h1>
 
 <?=\yii\grid\GridView::widget([
-    'dataProvider' => new \yii\data\ArrayDataProvider([
-       'allModels' => $news
-    ]),
+    'dataProvider' => $newsDataProvider,
     'columns' => [
         'id',
         'date',
         'name',
         [
+            'class' => 'yii\grid\DataColumn',
             'label' => 'Тема',
             'value' => function(News $model){
                 return $model->getTheme()->name;
@@ -26,12 +27,7 @@ $this->title = 'Главная';
         ],
         'text',
         [
-            'format' => 'raw',
-            'value' => function(News $model){
-            return Html::a('читать далее',Url::toRoute([ 'view', 'id' => $model->id]));
-            }
+            'class' => 'yii\grid\ActionColumn',
         ]
     ]
 ])?>
-
-<?= LinkPager::widget(['pagination' => $pagination]) ?>

@@ -50,11 +50,14 @@ class DateWidget extends Widget{
                 $items_months = array();
                 foreach ($months as $month_num => $count_news) {
                     $monthLabel = $months_names[$month_num];
-                    $items_months[] = ['label' => $monthLabel . " ({$count_news})"
-                        , 'url' => Url::to(['site/index', 'year' => $year
-                            , 'month' => $month_num])];
+                    $items_months[] = [
+                        'options' => ['class' => 'list-group-item list-group-item-action']
+                        ,'label' => $monthLabel . " ({$count_news})"
+                        ,'url' => Url::to(['site/index', 'year' => $year, 'month' => $month_num])
+                    ];
                 }
                 $items[] = ['label' => $year
+                    ,'options' => ['class' => 'list-group-item list-group-item-action']
                     , 'url' => Url::toRoute(["site/index", 'year' => $year])
                     , 'template' => '<a href="{url}" >{label}<i class="fa fa-angle-left pull-right"></i></a>'
                     , 'items' => $items_months];
@@ -62,9 +65,9 @@ class DateWidget extends Widget{
             }
             $this->message .= "<br><h3>Года:</h3>";
             $this->message .= Menu::widget([
-                'options' => ['class' => 'sidebar-menu treeview'],
+                'options' => ['class' => 'list-group'],
                 'items' => $items,
-                'submenuTemplate' => "\n<ul class='treeview-menu'>\n{items}\n</ul>\n",
+                'submenuTemplate' => "\n<ul class='list-group'>\n{items}\n</ul>\n",
                 'encodeLabels' => false, //allows you to use html in labels
                 'activateParents' => true,]);
         }

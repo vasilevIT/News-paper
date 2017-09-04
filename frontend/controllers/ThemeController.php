@@ -12,6 +12,7 @@ namespace frontend\controllers;
 use common\controllers\BehaviorsController;
 use frontend\models\Theme;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 
 class ThemeController extends BehaviorsController
@@ -42,10 +43,13 @@ class ThemeController extends BehaviorsController
 
         $themes = $query
             ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
+            ->limit($pagination->limit);
 
-        return $this->render('index',['themes'=>$themes,'pagination' => $pagination]);
+        $themeDataProvider = new ActiveDataProvider([
+            'query' => $themes,
+            'pagination' => $pagination
+        ]);
+        return $this->render('index',['themeDataProvider'=>$themeDataProvider]);
     }
 
     public function actionView(){

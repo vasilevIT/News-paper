@@ -5,6 +5,7 @@ use common\controllers\BehaviorsController;
 use frontend\models\SignupForm;
 use Yii;
 use yii\base\ErrorException;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -62,12 +63,14 @@ class SiteController extends BehaviorsController
 
         $news = $query->orderBy(['date' => SORT_DESC])
             ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
+            ->limit($pagination->limit);
+        $newsDataProvider = new ActiveDataProvider([
+            'query' => $news,
+            'pagination' => $pagination
+        ]);
 
         return $this->render('index', [
-            'news' => $news,
-            'pagination' => $pagination,
+            'newsDataProvider' => $newsDataProvider,
         ]);
     }
 
